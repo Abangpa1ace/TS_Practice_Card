@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Button from '../common/Button';
 
 const MemoListHeader: React.FC = () => {
   const [isEditTitle, setIsEditTitle] = useState(false);
@@ -23,7 +24,7 @@ const MemoListHeader: React.FC = () => {
         )}
       </div>
       <div className="buttons">
-        <button onClick={toggleEditTitle}>수정</button>
+        <Button handleClick={toggleEditTitle}>수정</Button>
       </div>
     </ScMemoListHeader>
   );

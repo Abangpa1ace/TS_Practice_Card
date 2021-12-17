@@ -29,7 +29,7 @@
   "include": [
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/views/components/common/Buitton.js"  ],
   "exclude": [
     "node_modules"
   ]
