@@ -7,3 +7,13 @@ export interface LabelItem {
 }
 
 export type LabelList = LabelItem[];
+
+export interface MemoItem {
+  title: string;
+  content: string;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type MemoList = MemoItem[];

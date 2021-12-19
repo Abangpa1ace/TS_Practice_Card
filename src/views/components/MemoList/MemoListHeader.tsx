@@ -24,7 +24,9 @@ const MemoListHeader: React.FC = () => {
         )}
       </div>
       <div className="buttons">
+        <Button handleClick={toggleEditTitle}>이름변경</Button>
         <Button handleClick={toggleEditTitle}>수정</Button>
+        <Button handleClick={toggleEditTitle}>삭제</Button>
       </div>
     </ScMemoListHeader>
   );
