@@ -1,15 +1,11 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { labelListState } from "../../recoil";
+import { labelListSelector } from "../../recoil";
 import { postAddLabel } from "services";
 import styled from "styled-components";
 
 const LabelList: React.FC = () => {
-  const [list, setList] = useRecoilState(labelListState);
-
-  const test = () => {
-    setList([]);
-  }
+  const [list, setList] = useRecoilState(labelListSelector);
 
   const addLabel = async () => {
     const title = await window.prompt();
@@ -18,7 +14,7 @@ const LabelList: React.FC = () => {
 
   return (
     <LabelListStyled>
-      <LabelItem onClick={test}>전체메모</LabelItem>
+      <LabelItem>전체메모</LabelItem>
       {list.map(e => <LabelItem key={e.id}>{e.title} ({e.memoCount})</LabelItem>)}
       <LabelItem onClick={addLabel} className="add-btn">추가하기</LabelItem>
     </LabelListStyled>

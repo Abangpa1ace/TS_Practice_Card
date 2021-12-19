@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+import { getLabelList } from "services";
 
 export const labelListState = atom({
   key: 'labelListState',
@@ -25,9 +26,10 @@ const selectedLabelState = atom({
   default: '',
 })
 
-// const labelSelector = selector({
-//   key: 'labelSelector',
-//   get: ({ get }) => {
-//     const labelList
-//   }
-// })
+export const labelListSelector = selector({
+  key: 'labelListSelector',
+  get: async ({ get }) => {
+    const data = await getLabelList();
+    return data;
+  }
+})
