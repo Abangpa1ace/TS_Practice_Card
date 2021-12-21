@@ -14,8 +14,11 @@ const MainPage: React.FC = () => {
 };
 
 const ScMainPage = styled.main`
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 2fr 6fr;
+  grid-template-columns: 1fr 2fr 5fr;
   gap: 40px;
 
   > * {

@@ -24,7 +24,7 @@ const MemoList: React.FC = () => {
     <MemoListStyled>
       <MemoListHeader />
       <ul className="memo-list">
-        {list.map(e => <MemoListItem key={e.id} info={e} />)}
+        {list.map(e => <MemoListItem key={e.id} memo={e}/>)}
       </ul>
     </MemoListStyled>
   );

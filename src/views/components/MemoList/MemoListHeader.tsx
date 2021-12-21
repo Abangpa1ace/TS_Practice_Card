@@ -38,6 +38,11 @@ const ScMemoListHeader = styled.header`
   align-items: center;
   height: 50px;
   padding: 15px;
+
+  .buttons {
+    display: flex;
+    gap: 6px;
+  }
 `;
 
 export default MemoListHeader;

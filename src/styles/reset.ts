@@ -10,7 +10,7 @@ const GlobalReset = createGlobalStyle`
   }
   body {
     height: 100vh;
-    padding: 80px 300px;
+    padding: 80px;
   }
   ul, li {
     list-style: none;

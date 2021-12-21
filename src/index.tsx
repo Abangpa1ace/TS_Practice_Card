@@ -7,7 +7,9 @@ import App from './App';
 ReactDOM.render(
   <StrictMode>
     <RecoilRoot>
-      <App />
+      <React.Suspense fallback={<div>Loading... </div>}>
+        <App />
+      </React.Suspense>
     </RecoilRoot>
   </StrictMode>,
   document.getElementById('root'),

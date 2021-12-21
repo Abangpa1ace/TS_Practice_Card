@@ -1,9 +1,13 @@
 import React from 'react'
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { flexCenter } from 'styles/theme';
 
-const Button = ({ children, handleClick }) => {
+type Props = {
+  children: React.ReactNode,
+  handleClick: () => void,
+}
+
+const Button: React.FC<Props> = ({ children, handleClick }: Props) => {
   return (
     <ScButton onClick={handleClick}>
       {children}
@@ -17,10 +21,5 @@ const ScButton = styled.button`
   border: 1px solid black;
   border-radius: 4px;
 `;
-
-Button.propTypes = {
-  children: PropTypes.node,
-  handleClick: PropTypes.any,
-}
 
 export default Button

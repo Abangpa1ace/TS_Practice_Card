@@ -24,3 +24,9 @@ export const flexAlign = css`
   display: flex;
   align-items: center;
 `;
+
+export const ellipsis = css`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
