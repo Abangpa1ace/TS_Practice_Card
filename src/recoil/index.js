@@ -1,20 +1,37 @@
-import { atom, selector } from 'recoil';
-import { getLabelList } from "services";
+import { atom, atomFamily, selector } from 'recoil';
+import { getLabel, getLabelList } from "services";
 
-export const labelListState = atom({
-  key: 'labelListState',
-  default: [],
+export const selectorTrigger = atomFamily({
+  key: 'selectorTrigger',
+  default: Date.now(),
 })
 
-const selectedLabelState = atom({
-  key: 'selectedLabelState',
+export const onLabelIdState = atom({
+  key: 'onLabelIdState',
   default: '',
 })
 
 export const labelListSelector = selector({
   key: 'labelListSelector',
   get: async ({ get }) => {
-    const data = await getLabelList();
-    return data;
+    get(selectorTrigger('labelListSelector'))
+    const list = await getLabelList();
+    return list;
   },
+  set: ({ set }) => {
+    set(selectorTrigger('labelListSelector'), Date.now())
+  }
 })
+
+export const onLabelSelector = selector({
+  key: 'onLabelSelector',
+  get: async ({ get }) => {
+    const id = get(onLabelIdState);
+    const label = await getLabel(id);
+    return label;
+  }
+})
+
+// export const memoListSelector = selector({
+//   key: 'memoListSelector',
+// })

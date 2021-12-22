@@ -13,9 +13,9 @@ const MemoListItem: React.FC<Props> = ({ memo }: Props) => {
       <input type='checkbox' className="check" />
       <div className='content'>
         <h4>{memo.title}</h4>
-        <p>{memo.content}태스ㅜ틑투투투투투ㅜ투투투투투투퉅투투투ㅜㅌ투</p>
+        <p>{memo.content}</p>
       </div>
-      <p className='date'>2021.01.01</p>
+      <p className='date'>{memo.updatedAt.slice(0,10)}</p>
     </ScMemoListItem>
   )
 }
