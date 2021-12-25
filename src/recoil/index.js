@@ -6,31 +6,34 @@ export const selectorTrigger = atomFamily({
   default: Date.now(),
 })
 
-export const onLabelIdState = atom({
-  key: 'onLabelIdState',
+export const focusLabelIdState = atom({
+  key: 'focusLabelId',
   default: '',
 })
 
 export const labelListSelector = selector({
-  key: 'labelListSelector',
+  key: 'labelList',
   get: async ({ get }) => {
-    get(selectorTrigger('labelListSelector'))
+    get(selectorTrigger('labelList'))
     const list = await getLabelList();
     return list;
   },
   set: ({ set }) => {
-    set(selectorTrigger('labelListSelector'), Date.now())
+    set(selectorTrigger('labelList'), Date.now())
   }
 })
 
-export const onLabelSelector = selector({
-  key: 'onLabelSelector',
+export const focusLabelSelector = selector({
+  key: 'focusLabel',
   get: async ({ get }) => {
-    const id = get(onLabelIdState);
+    const id = get(focusLabelIdState);
     const label = await getLabel(id);
     return label;
   }
 })
+
+
+
 
 // export const memoListSelector = selector({
 //   key: 'memoListSelector',

@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import { onLabelSelector } from "../../../recoil";
+import { focusLabelSelector } from "../../../recoil";
 import styled from "styled-components";
 import Button from '../common/Button';
 import { putEditLabel } from "services";
 
 const MemoListHeader: React.FC = () => {
-  const onLabel = useRecoilValue(onLabelSelector);
+  const focusLabel = useRecoilValue(focusLabelSelector);
   const [isEditTitle, setIsEditTitle] = useState(false);
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(focusLabel.title);
+
+  useEffect(() => {
+    setTitle(focusLabel.title)
+  }, [focusLabel])
 
   const toggleEditTitle = () => {
-    if (isEditTitle) putEditLabel({ id: onLabel.id, title })
+    if (isEditTitle) putEditLabel({ id: focusLabel.id, title })
     setIsEditTitle(!isEditTitle);
   };
 
