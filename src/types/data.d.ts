@@ -1,8 +1,11 @@
-export interface LabelItem {
+export interface deleteLabelItem {
   title: string;
   id: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface LabelItem extends deleteLabelItem {
   memoCount: number;
 }
 

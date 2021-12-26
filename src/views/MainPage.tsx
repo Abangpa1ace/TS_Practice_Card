@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import LabelList from "./components/LabelList";
+import MemoEditor from "./components/MemoEditor";
 import MemoList from "./components/MemoList/MemoList";
 
 const MainPage: React.FC = () => {
@@ -8,7 +9,7 @@ const MainPage: React.FC = () => {
     <ScMainPage>
       <LabelList />
       <MemoList />
-      <section className="memo-writer"></section>
+      <MemoEditor />
     </ScMainPage>
   );
 };

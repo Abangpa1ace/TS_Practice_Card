@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-import { labelListSelector, focusLabelState } from "../../recoil";
+import { labelListSelector, focusLabelState, totalMemoListSelector } from "../../recoil";
 import { postAddLabel } from "services";
 import styled from "styled-components";
 
@@ -14,7 +14,8 @@ const LabelList: React.FC = () => {
   const updateLabelList = useResetRecoilState(labelListSelector);
   const [focusLabel, setFocusLabel] = useRecoilState(focusLabelState);
 
-  const totalCount = labelList.reduce((acc,cur) => { return acc + cur.memoCount}, 0);
+  const totalMemoList = useRecoilValue(totalMemoListSelector);
+  const totalCount = totalMemoList?.length;
 
   const addLabel = async () => {
     const title = await window.prompt();

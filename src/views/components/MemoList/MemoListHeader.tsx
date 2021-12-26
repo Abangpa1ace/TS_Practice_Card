@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { labelListSelector, memoListSelector, focusLabelState } from "../../../recoil";
 import styled from "styled-components";
 import Button from '../common/Button';
-import { postAddMemo, putEditLabel } from "services";
+import { deleteLabel, postAddMemo, putEditLabel } from "services";
+import ButtonWrapper from "../common/ButtonWrapper";
 
 const MemoListHeader: React.FC = () => {
-  const focusLabel = useRecoilValue(focusLabelState);
+  const [focusLabel, setFocusLabel] = useRecoilState(focusLabelState);
   const updateLabelList = useResetRecoilState(labelListSelector);
   const updateMemoList = useResetRecoilState(memoListSelector);
   const [isEditTitle, setIsEditTitle] = useState(false);
   const [title, setTitle] = useState('');
 
+  const isTotal = !focusLabel;
+
   useEffect(() => {
+    setIsEditTitle(false);
     setTitle(focusLabel?.title ?? '라벨을 선택해주세요.')
   }, [focusLabel])
-
-  const addMemo = async () => {
-    await postAddMemo({ title: '테스트 메모', content: Date.now().toString() });
-    updateMemoList();
-    updateLabelList();
-  }
 
   const toggleEditTitle = async () => {
     if (isEditTitle && focusLabel.title !== title) {
@@ -34,6 +32,21 @@ const MemoListHeader: React.FC = () => {
     setTitle(e.target.value);
   };
 
+  const removeLabel = async () => {
+    await deleteLabel(focusLabel?.id);
+
+    setFocusLabel(null);
+    updateLabelList();
+  }
+
+
+  const addMemo = async () => {
+    await postAddMemo({ title: '테스트 메모', content: Date.now().toString() });
+    updateMemoList();
+    updateLabelList();
+  }
+
+
   return (
     <ScMemoListHeader>
       <div className="title">
@@ -43,17 +56,17 @@ const MemoListHeader: React.FC = () => {
           <h3>{title}</h3>
         )}
       </div>
-      <div className="buttons">
+      <ButtonWrapper>
         <h5>라벨 : </h5>
-        <Button disabled={!focusLabel} handleClick={toggleEditTitle}>이름변경</Button>
-        <Button handleClick={toggleEditTitle}>삭제</Button>
-      </div>
-      <div className="buttons">
+        <Button disabled={isTotal} handleClick={toggleEditTitle}>이름변경</Button>
+        <Button disabled={isTotal} handleClick={removeLabel}>삭제</Button>
+      </ButtonWrapper>
+      <ButtonWrapper>
         <h5>메모 : </h5>
         <Button handleClick={addMemo}>새 메모</Button>
         <Button handleClick={toggleEditTitle}>수정</Button>
         <Button handleClick={toggleEditTitle}>삭제</Button>
-      </div>
+      </ButtonWrapper>
     </ScMemoListHeader>
   );
 };
@@ -69,16 +82,6 @@ const ScMemoListHeader = styled.header`
     }
   }
 
-  .buttons {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 10px;
-    
-    > button {
-      font-size: 12px;
-    }
-  }
 `;
 
 export default MemoListHeader;

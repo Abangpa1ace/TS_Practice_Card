@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import { LabelItem, LabelList, MemoList, MemoItem, NewMemoRequest, LabelAttachRequest } from 'types/data';
+import { LabelItem, LabelList, MemoList, MemoItem, NewMemoRequest, LabelAttachRequest, deleteLabelItem } from 'types/data';
 
 const Axios = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -12,6 +12,7 @@ const api = {
   get: (path: string) => Axios.get(path).then(resData),
   post: (path: string, body) => Axios.post(path, body).then(resData),
   put: (path: string, body) => Axios.put(path, body).then(resData),
+  delete: (path: string) => Axios.delete(path).then(resData),
 }
 
 export const getLabelList = (): Promise<LabelList> => {
@@ -24,6 +25,10 @@ export const postAddLabel = (title: string): Promise<LabelItem> => {
 
 export const putEditLabel = ({ id, title }: { [key: string]: string; }): Promise<LabelItem> => {
   return api.put(`/labels/${id}`, { title })
+}
+
+export const deleteLabel = (id: string): Promise<deleteLabelItem> => {
+  return api.delete(`/labels/${id}`)
 }
 
 export const getMemoListByLabel = (id: string): Promise<MemoList> => {
