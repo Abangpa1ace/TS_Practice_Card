@@ -17,3 +17,14 @@ export interface MemoItem {
 }
 
 export type MemoList = MemoItem[];
+
+export interface NewMemoRequest {
+  title: string;
+  content: string;
+}
+
+export interface LabelAttachRequest {
+  id: string;
+  memoIds: string[];
+  isDetach?: boolean;
+}

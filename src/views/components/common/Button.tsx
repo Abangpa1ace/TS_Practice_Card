@@ -3,23 +3,30 @@ import styled from 'styled-components';
 import { flexCenter } from 'styles/theme';
 
 type Props = {
-  children: React.ReactNode,
-  handleClick: () => void,
+  children?: React.ReactNode,
+  disabled?: boolean,
+  handleClick?: () => void,
 }
 
-const Button: React.FC<Props> = ({ children, handleClick }: Props) => {
+const Button: React.FC<Props> = ({ children, disabled, handleClick }: Props) => {
   return (
-    <ScButton onClick={handleClick}>
-      {children}
+    <ScButton disabled={disabled} onClick={handleClick}>
+      {children ?? '클릭'}
     </ScButton>
   )
 }
 
 const ScButton = styled.button`
   ${flexCenter};
-  padding: 4px 8px;
+  padding: 3px 6px;
   border: 1px solid black;
   border-radius: 4px;
+
+  &:disabled {
+    color: black;
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
 `;
 
 export default Button

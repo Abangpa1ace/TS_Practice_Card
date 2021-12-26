@@ -1,14 +1,14 @@
 import { atom, atomFamily, selector } from 'recoil';
-import { getLabel, getLabelList } from "services";
+import { getLabel, getLabelList, getMemoList, getMemoListByLabel } from "services";
 
 export const selectorTrigger = atomFamily({
   key: 'selectorTrigger',
   default: Date.now(),
 })
 
-export const focusLabelIdState = atom({
-  key: 'focusLabelId',
-  default: '',
+export const focusLabelState = atom({
+  key: 'focusLabel',
+  default: null,
 })
 
 export const labelListSelector = selector({
@@ -23,18 +23,14 @@ export const labelListSelector = selector({
   }
 })
 
-export const focusLabelSelector = selector({
-  key: 'focusLabel',
+export const memoListSelector = selector({
+  key: 'memoList',
   get: async ({ get }) => {
-    const id = get(focusLabelIdState);
-    const label = await getLabel(id);
-    return label;
+    get(selectorTrigger('labelList'))
+    const id = get(focusLabelState)?.id;
+    return id ? getMemoListByLabel(id) : getMemoList();
+  },
+  set: ({ set }) => {
+    set(selectorTrigger('memoList'), Date.now())
   }
 })
-
-
-
-
-// export const memoListSelector = selector({
-//   key: 'memoListSelector',
-// })

@@ -24,8 +24,10 @@ const ScMainPage = styled.main`
   > * {
     height: 600px;
     max-height: 600px;
-    border: ${({ theme }) => theme.borderBlack};
-    border: 1px solid;
+    padding: 5px;
+    background-color: #FAFBFC;
+    border: 2px solid skyblue;
+    border-radius: 6px;
     overflow-y: auto;
   }
 `;

@@ -23,9 +23,7 @@ const MemoListItem: React.FC<Props> = ({ memo }: Props) => {
 const ScMemoListItem = styled.li`
   position: relative;
   padding: 15px 10px 15px 35px;
-  &:not(&:last-child) {
-    border-bottom: 1px solid black;
-  }
+  border-top: 1px solid black;
   
   .check {
     position: absolute;
