@@ -1,3 +1,6 @@
+export interface EmptyObject  {
+  [K in any] : never
+}
 export interface deleteLabelItem {
   title: string;
   id: string;
@@ -21,9 +24,8 @@ export interface MemoItem {
 
 export type MemoList = MemoItem[];
 
-export interface NewMemoRequest {
-  title: string;
-  content: string;
+export interface StringObject {
+  [key: string]: string;
 }
 
 export interface LabelAttachRequest {

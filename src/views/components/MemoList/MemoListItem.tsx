@@ -1,5 +1,5 @@
 import React from 'react'
-import { focusMemoState, checkedMemoListState } from '../../../recoil';
+import { focusMemoState, checkedMemoListState } from '../../../recoil/main';
 import { useRecoilState } from 'recoil';
 import styled from "styled-components";
 import { ellipsis } from 'styles/theme';
@@ -14,8 +14,8 @@ interface TMemoListItem {
 }
 
 const MemoListItem: React.FC<Props> = ({ memo }: Props) => {
-  const [focusMemo, setFocusMemo] = useRecoilState(focusMemoState);
-  const [checkedMemoList, setCheckedMemoList] = useRecoilState(checkedMemoListState);
+  const [focusMemo, setFocusMemo] = useRecoilState<MemoItem>(focusMemoState);
+  const [checkedMemoList, setCheckedMemoList] = useRecoilState<string[]>(checkedMemoListState);
 
   const isChecked = !!checkedMemoList.find(mid => mid === memo?.id);
 

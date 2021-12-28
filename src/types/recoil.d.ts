@@ -1,0 +1,1 @@
+export type TriggerParams = 'labelList' | 'totalMemoList' | 'memoList'; 

@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import { LabelItem, LabelList, MemoList, MemoItem, NewMemoRequest, LabelAttachRequest, deleteLabelItem } from 'types/data';
+import { LabelItem, LabelList, MemoList, MemoItem, StringObject, LabelAttachRequest, deleteLabelItem, EmptyObject } from 'types/data';
 
 const Axios = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -39,8 +39,16 @@ export const getMemoList = (): Promise<MemoList> => {
   return api.get('/memos')
 }
 
-export const postAddMemo = ({ title, content }: NewMemoRequest): Promise<MemoItem> => {
+export const postAddMemo = ({ title, content }: StringObject): Promise<MemoItem> => {
   return api.post('/memos', { title, content })
+}
+
+export const putEditMemo = ({ id, title, content }: StringObject): Promise<MemoItem> => {
+  return api.put(`/memos/${id}`, { title, content })
+}
+
+export const deleteMemo = (id: string): Promise<EmptyObject> => {
+  return api.delete(`/memos/${id}`);
 }
 
 export const postAttachLabel = ({ id, memoIds, isDetach = false }: LabelAttachRequest): Promise<LabelItem> => {

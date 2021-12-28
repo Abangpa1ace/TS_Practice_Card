@@ -1,17 +1,19 @@
 import { atom, atomFamily, selector } from 'recoil';
 import { getLabelList, getMemoList, getMemoListByLabel } from "services";
+import { TriggerParams } from 'types/recoil';
+import { LabelItem, LabelList, MemoItem, MemoList } from '../types/data';
 
-export const selectorTrigger = atomFamily({
+export const selectorTrigger = atomFamily<number, TriggerParams>({
   key: 'selectorTrigger',
   default: Date.now(),
 })
 
-export const focusLabelState = atom({
+export const focusLabelState = atom<LabelItem>({
   key: 'focusLabel',
   default: null,
 })
 
-export const labelListSelector = selector({
+export const labelListSelector = selector<LabelList>({
   key: 'labelList',
   get: async ({ get }) => {
     get(selectorTrigger('labelList'))
@@ -23,7 +25,7 @@ export const labelListSelector = selector({
   }
 })
 
-export const totalMemoListSelector = selector({
+export const totalMemoListSelector = selector<MemoList>({
   key: 'totalMemoList',
   get: async ({ get }) => {
     get(selectorTrigger('totalMemoList'))
@@ -35,7 +37,7 @@ export const totalMemoListSelector = selector({
   }
 })
 
-export const memoListSelector = selector({
+export const memoListSelector = selector<MemoList>({
   key: 'memoList',
   get: async ({ get }) => {
     get(selectorTrigger('memoList'));
@@ -48,12 +50,12 @@ export const memoListSelector = selector({
   }
 })
 
-export const focusMemoState = atom({
+export const focusMemoState = atom<MemoItem>({
   key: 'focusMemo',
   default: null,
 })
 
-export const checkedMemoListState = atom({
+export const checkedMemoListState = atom<string[]>({
   key: 'checkedMemoList',
   default: [],
 })
