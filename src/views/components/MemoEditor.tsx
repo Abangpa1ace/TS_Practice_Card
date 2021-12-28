@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import { focusMemoState, labelListSelector, memoListSelector, totalMemoListSelector } from '../../recoil/main';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { focusMemoState, labelListSelector, memoLabelsSelector, memoListSelector, totalMemoListSelector } from '../../recoil/main';
 import styled from "styled-components";
 import Button from './common/Button';
 import ButtonWrapper from './common/ButtonWrapper';
 import { ellipsis } from 'styles/theme';
 import { deleteMemo, postAddMemo, putEditMemo } from 'services';
-import { MemoItem } from 'types/data';
+import { LabelList, MemoItem } from 'types/data';
 
 const defaultText = { title: '내용없음', content: ''}
 
 const MemoEditor: React.FC = () => {
   const [focusMemo, setFocusMemo] = useRecoilState<MemoItem>(focusMemoState);
-
+  const memoLabels = useRecoilValue<LabelList>(memoLabelsSelector);
+  
   const noFocus = !focusMemo;
 
   const updateLabelList = useResetRecoilState(labelListSelector);
@@ -25,22 +26,20 @@ const MemoEditor: React.FC = () => {
   const toggleEditMemo = (): void => setIsEditMemo(!isEditMemo);
   
   useEffect(() => {
-    setIsEditMemo(false);
+    if (focusMemo) setIsEditMemo(false);
     const { title, content } = focusMemo ?? defaultText;
     setMemoText({ title, content })
   }, [focusMemo])
 
 
   const addMemo = async () => {
+    setFocusMemo(null);
     if (isEditMemo) {
       const memo = await postAddMemo(memoText);
       await setFocusMemo(memo);
       updateLabelList();
       updateTotalMemoList();
       updateMemoList();
-    }
-    else {
-      setFocusMemo(null);
     }
     toggleEditMemo();
   }
@@ -84,6 +83,9 @@ const MemoEditor: React.FC = () => {
           <Button disabled={noFocus} handleClick={removeMemo}>삭제</Button>
         </ButtonWrapper>
       </header>
+      <div className="tags">
+        {!!focusMemo && memoLabels.map(e => <LabelTag key={e.id}>{e.title}</LabelTag>)}
+      </div>
       <div className='editor'>
         {isEditMemo
           ? <textarea name='content' value={memoText.content} onChange={(e) => inputMemo(e)} placeholder='내용을 입력해주세요.' />
@@ -94,14 +96,12 @@ const MemoEditor: React.FC = () => {
 }
 
 const ScMemoEditor = styled.div`
-
   header { 
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 15px 10px 0;
     margin-bottom: 15px;
-    border-bottom: 1px solid #000;
 
     .title {
       width: calc(100% - 140px);
@@ -115,8 +115,14 @@ const ScMemoEditor = styled.div`
     }
   }
 
+  .tags {
+    padding: 0 10px;
+    margin-bottom: 15px;
+  }
+
   .editor {
-    padding: 10px;
+    border-top: 2px solid #000;
+    padding: 20px 10px;
 
     textarea {
       width: 100%;
@@ -124,6 +130,16 @@ const ScMemoEditor = styled.div`
       padding: 5px;
     }
   }
+`;
+
+const LabelTag = styled.span`
+  display: inline-block;
+  padding: 3px 6px;
+  margin: 3px 10px 0 0;
+  color: #555;
+  border: 1px solid #555;
+  border-radius: 4px;
+  font-size: 12px;
 `;
 
 export default MemoEditor

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilValue, useRecoilState, useResetRecoilState } from "recoil";
-import { labelListSelector, memoListSelector, focusLabelState, checkedMemoListState } from "../../../recoil/main";
+import { labelListSelector, memoListSelector, focusLabelState, checkedMemoListState, memoLabelsSelector } from "../../../recoil/main";
 import styled from "styled-components";
 import Button from '../common/Button';
 import { deleteLabel, postAttachLabel, putEditLabel } from "services";
@@ -21,6 +21,7 @@ const MemoListHeader: React.FC = () => {
   /* Recoil Reseter */
   const updateLabelList = useResetRecoilState(labelListSelector);
   const updateMemoList = useResetRecoilState(memoListSelector);
+  const updateMemoLabels = useResetRecoilState(memoLabelsSelector);
   const resetCheckedMemoList = useResetRecoilState(checkedMemoListState);
 
   /* Comp State */
@@ -59,6 +60,7 @@ const MemoListHeader: React.FC = () => {
     await postAttachLabel(body);
     updateMemoList();
     updateLabelList();
+    updateMemoLabels();
   }
 
   const toggleEditTitle = async () => {
@@ -78,6 +80,7 @@ const MemoListHeader: React.FC = () => {
 
     setFocusLabel(null);
     updateLabelList();
+    updateMemoLabels();
   }
 
   return (

@@ -31,10 +31,6 @@ export const deleteLabel = (id: string): Promise<deleteLabelItem> => {
   return api.delete(`/labels/${id}`)
 }
 
-export const getMemoListByLabel = (id: string): Promise<MemoList> => {
-  return api.get(`/labels/${id}/memos`);
-}
-
 export const getMemoList = (): Promise<MemoList> => {
   return api.get('/memos')
 }
@@ -49,6 +45,14 @@ export const putEditMemo = ({ id, title, content }: StringObject): Promise<MemoI
 
 export const deleteMemo = (id: string): Promise<EmptyObject> => {
   return api.delete(`/memos/${id}`);
+}
+
+export const getMemoListByLabel = (id: string): Promise<MemoList> => {
+  return api.get(`/labels/${id}/memos`);
+}
+
+export const getLabelListByMemo = (id: string): Promise<LabelList> => {
+  return api.get(`/memos/${id}/labels`);
 }
 
 export const postAttachLabel = ({ id, memoIds, isDetach = false }: LabelAttachRequest): Promise<LabelItem> => {

@@ -1,5 +1,5 @@
 import { atom, atomFamily, selector } from 'recoil';
-import { getLabelList, getMemoList, getMemoListByLabel } from "services";
+import { getLabelList, getLabelListByMemo, getMemoList, getMemoListByLabel } from "services";
 import { TriggerParams } from 'types/recoil';
 import { LabelItem, LabelList, MemoItem, MemoList } from '../types/data';
 
@@ -58,4 +58,16 @@ export const focusMemoState = atom<MemoItem>({
 export const checkedMemoListState = atom<string[]>({
   key: 'checkedMemoList',
   default: [],
+})
+
+export const memoLabelsSelector = selector<LabelList>({
+  key: 'memoLabels',
+  get: async ({ get }) => {
+    get(selectorTrigger('memoLabels'));
+    const id = get(focusMemoState)?.id;
+    return id ? getLabelListByMemo(id) : [];
+  },
+  set: ({ set }) => {
+    set(selectorTrigger('memoLabels'), Date.now())
+  }
 })
