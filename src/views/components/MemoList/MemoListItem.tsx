@@ -1,5 +1,5 @@
 import React from 'react'
-import { focusMemoState } from '../../../recoil';
+import { focusMemoState, checkedMemoListState } from '../../../recoil';
 import { useRecoilState } from 'recoil';
 import styled from "styled-components";
 import { ellipsis } from 'styles/theme';
@@ -15,10 +15,19 @@ interface TMemoListItem {
 
 const MemoListItem: React.FC<Props> = ({ memo }: Props) => {
   const [focusMemo, setFocusMemo] = useRecoilState(focusMemoState);
+  const [checkedMemoList, setCheckedMemoList] = useRecoilState(checkedMemoListState);
+
+  const isChecked = !!checkedMemoList.find(mid => mid === memo?.id);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.target;
+    const newList = checked ? [...checkedMemoList, memo?.id] : checkedMemoList.filter(mid => mid !== memo?.id);
+    setCheckedMemoList(newList);
+  }
 
   return (
     <ScMemoListItem selected={memo.id === focusMemo?.id} onClick={() => setFocusMemo(memo)}>
-      <input type='checkbox' className="check" />
+      <input type='checkbox' checked={isChecked} onClick={(e) => e.stopPropagation()} onChange={handleChange} className="check" />
       <div className='content'>
         <h4>{memo.title}</h4>
         <p>{memo.content}</p>
@@ -44,9 +53,11 @@ const ScMemoListItem = styled.li<TMemoListItem>`
   .content {
     h4 {
       margin-bottom: 5px;
+      font-weight: normal;
     }
     p {
       ${ellipsis};
+      font-size: 14px;
     }
   }
   .date {

@@ -44,5 +44,5 @@ export const postAddMemo = ({ title, content }: NewMemoRequest): Promise<MemoIte
 }
 
 export const postAttachLabel = ({ id, memoIds, isDetach = false }: LabelAttachRequest): Promise<LabelItem> => {
-  return api.post(`/labels/${id}/memos${isDetach && '/delete'}`, memoIds)
+  return api.post(`/labels/${id}/memos${isDetach ? '/delete' : ''}`, { memoIds })
 }

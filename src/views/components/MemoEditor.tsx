@@ -11,8 +11,10 @@ const MemoEditor: React.FC = () => {
   const [memoText, setMemoText] = useState({ title: '제목', content: '내용'});
 
   useEffect(() => {
-    const { title, content } = focusMemo;
-    setMemoText({ title, content })
+    if (focusMemo) {
+      const { title, content } = focusMemo;
+      setMemoText({ title, content })
+    }
   }, [focusMemo])
 
   const toggleEditMemo = () => {

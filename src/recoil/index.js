@@ -1,14 +1,10 @@
 import { atom, atomFamily, selector } from 'recoil';
-import { getLabel, getLabelList, getMemoList, getMemoListByLabel } from "services";
+import { getLabelList, getMemoList, getMemoListByLabel } from "services";
 
 export const selectorTrigger = atomFamily({
   key: 'selectorTrigger',
   default: Date.now(),
 })
-
-// export const labelListState = atom({
-//   key: ''
-// })
 
 export const focusLabelState = atom({
   key: 'focusLabel',
@@ -55,4 +51,9 @@ export const memoListSelector = selector({
 export const focusMemoState = atom({
   key: 'focusMemo',
   default: null,
+})
+
+export const checkedMemoListState = atom({
+  key: 'checkedMemoList',
+  default: [],
 })
